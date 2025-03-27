@@ -1,0 +1,12 @@
+# Python dependencies for development
+requests==2.28.2
+pre-commit==3.3.3
+pytest==7.4.0
+flake8==6.1.0
+mypy==1.5.1
+@DeanLuus1994 ➜ /workspaces/codespaces-models (main) $  cd /workspaces/codespaces-models/.vscode ; /usr/bin/env /usr/local/python/current/bin/python /home/codespace/.vscode-remote/extensions/ms-python.debugpy-2025.4.1-linux-x64/bundled/libs/debugpy/adapter/../../debugpy/launcher 38399 -- /workspaces/codespaces-models/.vscode/launch.json 
+@DeanLuus1994 ➜ /workspaces/codespaces-models (main) $  cd /workspaces/codespaces-models/.vscode ; /usr/bin/env /usr/local/python/current/bin/python /home/codespace/.vscode-remote/extensions/ms-python.debugpy-2025.4.1-linux-x64/bundled/libs/debugpy/adapter/../../debugpy/launcher 38399 -- /workspaces/codespaces-models/.vscode/launch.json 
+transformers==4.30.0
+datasets==2.14.0
+safetensors==0.3.1
+accelerate==0.20.3

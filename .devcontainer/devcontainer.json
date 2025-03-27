@@ -1,0 +1,29 @@
+{
+    "name": "GitHub CI/CD Devcontainer",
+    "build": {
+      "dockerfile": "Dockerfile",
+      "context": ".."
+    },
+    "runArgs": [
+      "--gpus=all", // Enable GPU passthrough for NVIDIA GPUs
+      "--env-file", ".env" // Load environment variables from the .env file
+    ],
+    "settings": {
+      "terminal.integrated.defaultProfile.linux": "bash",
+      "python.defaultInterpreterPath": "/usr/local/bin/python"
+    },
+    "extensions": [
+      "ms-python.python", // Python extension for VS Code
+      "ms-azuretools.vscode-docker", // Docker extension for VS Code
+      "github.vscode-pull-request-github" // GitHub Pull Requests and Issues extension
+    ],
+    "postCreateCommand": "./post-create.sh", // Run post-create script
+    "remoteEnv": {
+      "GITHUB_TOKEN": "${localEnv:GITHUB_TOKEN}" // Pass through GitHub token from host
+    },
+    "mounts": [
+      "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached" // Mount the workspace folder
+    ],
+    "workspaceFolder": "/workspace", // Set the workspace folder inside the container
+    "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind"
+  }

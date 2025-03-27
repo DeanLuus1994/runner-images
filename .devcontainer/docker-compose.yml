@@ -1,0 +1,59 @@
+version: "3.8"
+
+services:
+  vector-db:
+    image: qdrant/qdrant:latest
+    container_name: qdrant-vector-db
+    ports:
+      - "6333:6333"
+    volumes:
+      - qdrant_data:/qdrant/storage
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:6333/"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    networks:
+      - ai-network
+
+  monitoring:
+    image: grafana/grafana:latest
+    container_name: grafana-monitoring
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+    restart: unless-stopped
+    depends_on:
+      vector-db:
+        condition: service_healthy
+    networks:
+      - ai-network
+
+  vectorization-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: vectorization-api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ../:/app
+    depends_on:
+      vector-db:
+        condition: service_healthy
+    environment:
+      - QDRANT_HOST=vector-db
+      - QDRANT_PORT=6333
+    restart: unless-stopped
+    networks:
+      - ai-network
+
+volumes:
+  qdrant_data:
+  grafana_data:
+
+networks:
+  ai-network:
+    driver: bridge
